@@ -1,6 +1,6 @@
 import javax.management.RuntimeErrorException;
 
-public class Autobus {
+public class Autobus implements Listener{
 	// Dati
 	private String targa;
 	private String modello;
@@ -76,69 +76,42 @@ public class Autobus {
 				+ posizione.getRimessa() + "]";
 	}
 	
+	/*
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (obj.getClass() != this.getClass())
+				return false;
+		Autobus a = (Autobus) obj;
+		if (a.getTarga() != this.targa)
+			return false;
+		return true;
+	}
+	
+	
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return this.targa.hashCode();
+	}
+	*/
+	
 	/* ################################################################
 	 * Comportamento
 	 * ################################################################
 	 */
 	static enum Stato {INAUTORIMESSA, INSERVIZIO, ROTTURA, INMANUTENZIONE};
 	
-	private Stato stato = Stato.INAUTORIMESSA;
+	public Stato stato = Stato.INAUTORIMESSA;
 
-	public Stato getStato() {
-		return stato;
+	public Autista at;
+		
+	@Override
+	public void fired(Evento e) {
+		TaskExecutor.getIstance().perform(new AutobusFired(this, e));
 	}
 	
-	// Implementazione iniziale
-	private Autista at;
-	
-	public void uscitaAutorimessa(Autista mittente, ManagerPosizione gettone) {
-		if (this.stato == Stato.INAUTORIMESSA) {
-			if (mittente.getAutorizzato().contains(this.posizione.getRimessa())) {
-				this.at = mittente;
-				ManagerPosizione.rmPosizione(this, this.posizione.getRimessa());
-				this.stato = Stato.INSERVIZIO;
-			}
-		}
-	}
-	
-	public void entrataAutorimessa(Autista mittente) {
-		if (this.stato == Stato.INSERVIZIO) {
-			if ( this.at == mittente) {
-				this.stato = Stato.INAUTORIMESSA;
-				this.at.entrata(this);
-				this.posizione.getRimessa().entrata(this);
-			}
-		}
-	}	
-	
-	public void rottura() {
-		if (this.stato == Stato.INSERVIZIO) {
-			this.at.setRotture(this.at.getRotture() + 1);
-			this.stato = Stato.ROTTURA;
-		}
-	}
-	
-	public void trasportoInAutorimessa(Officina rimessa) {
-		if (this.stato == Stato.ROTTURA) {
-			ManagerPosizione.addPosizione(this, rimessa);
-			this.stato = Stato.INMANUTENZIONE;
-		}
-	}
-	
-	public void fineManutenzione() {
-		if (this.stato == Stato.INMANUTENZIONE) {
-			this.stato = Stato.INAUTORIMESSA;
-			this.timestamp += 800000;
-		}
-	}
-	
-	public void periodica() {
-		if (this.stato == Stato.INAUTORIMESSA) {
-			if (this.posizione.getRimessa() != null && this.posizione.getRimessa().getClass() == Officina.class) {
-				this.stato = Stato.INMANUTENZIONE;
-			}
-		}
-	}
 	
 	
 }

@@ -11,7 +11,7 @@ import java.util.HashSet;
  * a patto di fare la verifica nella remove e nel get
  */
 
-public class Autista extends Dipendente{
+public class Autista extends Dipendente implements Listener{
 	private int rotture;
 	private HashSet<Autorimessa> autorizzato;
 	
@@ -53,6 +53,11 @@ public class Autista extends Dipendente{
 	}
 	
 	// Comportamento
+	@Override
+	public void fired(Evento e) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	public void entrata(Autobus autobus) {
 		

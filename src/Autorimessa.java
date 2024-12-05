@@ -2,7 +2,7 @@ import java.util.HashSet;
 
 import javax.management.RuntimeErrorException;
 
-public class Autorimessa {
+public class Autorimessa implements Listener{
 	private String indirizzo;
 	private int posti;
 	//HashSet<Autobus> autobus;
@@ -44,6 +44,11 @@ public class Autorimessa {
 	}
 	
 	// comportamento
+	@Override
+	public void fired(Evento e) {
+		// TODO Auto-generated method stub
+		
+	}
 	public void entrata(Autobus autobus) {
 		
 	}

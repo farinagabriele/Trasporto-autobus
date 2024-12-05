@@ -13,8 +13,6 @@ public class Manutenzione implements Runnable{
 		this.officina = officina;
 	}
 
-
-
 	@Override
 	public void run() {
 		
@@ -30,15 +28,15 @@ public class Manutenzione implements Runnable{
 		Manutenzione.termina = false;
 		
 		// tre flussi
-		VerificaPeriodica v = new VerificaPeriodica(autobus, t1);
-		Thread vt = new Thread(v);
-		vt.start();
+		VerificaPeriodica p = new VerificaPeriodica(autobus, t1);
+		Thread vp = new Thread(p);
+		vp.start();
 				
 		VerificaRotture r = new VerificaRotture(autobus, officina, t2);
 		Thread vr = new Thread(r);
 		vr.start();
 				
-		AttesaFine f = new AttesaFine(vr, vt);
+		AttesaFine f = new AttesaFine(vr, vp);
 		Thread af = new Thread(f);
 		af.start();
 		
@@ -49,7 +47,7 @@ public class Manutenzione implements Runnable{
 				
 		//attesa terminazione
 		try {
-			af.join();	// Attendo che af termini
+			af.join();	
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -57,7 +55,7 @@ public class Manutenzione implements Runnable{
 		
 		
 		try {
-			vt.join();
+			vp.join();
 			vr.join();
 			
 		} catch (InterruptedException e) {

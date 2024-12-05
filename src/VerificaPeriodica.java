@@ -11,13 +11,12 @@ public class VerificaPeriodica implements Runnable {
 		this.t = t;
 	}
 	
-	
-	
 	@Override
 	public void run() {
-		while(! Manutenzione.termina) {
+		while(!Manutenzione.termina) {
 			Periodica p = new Periodica(autobus);
-			TaskExecutor.istanza().esegui(p);
+			TaskExecutor.getIstance().perform(p);
+			
 			try {
 				Thread.sleep(t*1000);
 			} catch (InterruptedException e) {

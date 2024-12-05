@@ -19,7 +19,8 @@ public class VerificaRotture implements Runnable {
 	public void run() {
 		while(!Manutenzione.termina) {
 			Rotture r = new Rotture(autobus, officina);
-			TaskExecutor.istanza().esegui(r);
+			TaskExecutor.getIstance().perform(r);
+			
 			try {
 				Thread.sleep(t*1000);
 			} catch (InterruptedException e) {

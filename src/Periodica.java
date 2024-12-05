@@ -6,26 +6,17 @@ public class Periodica implements Task{
 	private boolean eseguito;
 	private int risultato;
 	
-	
 	public Periodica(LinkedList<Autobus> autobus) {
 		super();
 		this.autobus = autobus;
 		this.eseguito = false;
 	}
 
-	
-
 	public synchronized int getRisultato() {
 		if (!this.eseguito)
 			throw new RuntimeException("Oggetto periodica non terminato");
 		return risultato;
 	}
-
-
-
-	
-
-
 
 	@Override
 	public synchronized void esegui() {
@@ -37,8 +28,4 @@ public class Periodica implements Task{
 		eseguito = true;
 		// Accesso alle classi dati
 	}
-	
-	
-	
-	
 }

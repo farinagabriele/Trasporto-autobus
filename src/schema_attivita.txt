@@ -1,0 +1,17 @@
+attività atomiche:
+
+Definizione di una attività atomica
+
+public class Periodica implements Task{
+	
+	@Override
+	public synchronized void esegui() {
+		// Istruzioni attività atomica
+	}
+}
+
+Invocazione dell'attività atomica
+	....
+	Periodica p = new Periodica(autobus);
+	TaskExecutor.getIstance().esegui(p);
+	....

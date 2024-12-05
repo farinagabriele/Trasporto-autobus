@@ -3,7 +3,7 @@
  * @author skype
  *	Link associazione tra autobus ed autorimessa
  *  ATTENZIONE!! Anche in caso di associazioni con molteplicità 
- *  molti a molti il link collega sempre 2 oggetti singoli:
+ *  0.* a 0.* (molti a molti) il link collega sempre 2 oggetti singoli:
  *  un autobus <-> un autorimessa 
  */
 public class LinkPosizione {
@@ -18,23 +18,19 @@ public class LinkPosizione {
 		this.tempo = tempo;
 	}
 	
+	/*
+	 * Dato che per ogni variazione della coppia 
+	 * (autobus, rimessa) viene creato un nuovo 
+	 * oggetto LinkPosizione, non servono i metodi setter.
+	 */
 	
 	public Autobus getAutobus() {
 		return autobus;
-	}
-	public void setAutobus(Autobus autobus) {
-		this.autobus = autobus;
 	}
 	
 	public Autorimessa getRimessa() {
 		return rimessa;
 	}
-	
-	public void setRimessa(Autorimessa rimessa) {
-		this.rimessa = rimessa;
-	}
-	
-	
 	
 	public int getTempo() {
 		return tempo;
@@ -48,12 +44,17 @@ public class LinkPosizione {
 	
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
+		/* Due link sono uguali se e solo se sono non nulli e
+		 * sono della stessa classe e fanno riferimento allo stesso
+		 * autobus ed alla stessa autorimessa
+		 */
+		
 		if (obj == null)
 			return false;
 		if (obj.getClass() != this.getClass())
 			return false;
-		LinkPosizione l = (LinkPosizione) obj;
+		
+		LinkPosizione l = (LinkPosizione) obj; 	// Specializzazione (downgrade)
 		if (l.autobus != this.autobus)
 			return false;
 		if (l.rimessa != this.rimessa)
@@ -63,7 +64,9 @@ public class LinkPosizione {
 	
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
+		/* Il link è identificato dalla coppia (autobus, rimessa).
+		 * L'HashSet identifica i suoi elementi tramice hashCode.
+		 */
 		return this.autobus.hashCode() + this.rimessa.hashCode();
 	}
 }

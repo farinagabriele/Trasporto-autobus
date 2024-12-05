@@ -10,12 +10,6 @@ public class AttesaFine implements Runnable {
 		this.vt = vt;
 		this.vr = vr;
 	}
-
-
-
-	
-	
-	
 	
 	@Override
 	public void run() {
@@ -27,9 +21,5 @@ public class AttesaFine implements Runnable {
 		this.vt.interrupt();
 		this.vr.interrupt();
 		Manutenzione.termina = true;
-
 	}
-
-	
-
 }
